@@ -11,12 +11,21 @@ const Navbar = () => {
 
   const navigate = useNavigate();
 
+  // const logout = () => {
+  //   navigate("/");
+  //   aToken && setAToken("");
+  //   aToken && localStorage.removeItem("aToken");
+  //   dToken && setDToken("");
+  //   dToken && localStorage.removeItem("dToken");
+  // };
   const logout = () => {
+    setAToken("");
+    setDToken("");
+
+    localStorage.removeItem("aToken");
+    localStorage.removeItem("dToken");
+
     navigate("/");
-    aToken && setAToken("");
-    aToken && localStorage.removeItem("aToken");
-    dToken && setDToken("");
-    dToken && localStorage.removeItem("dToken");
   };
 
   return (

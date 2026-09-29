@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 export const DoctorContext = createContext();
 
 export const DoctorContextProvider = (props) => {
-  const [dToken, setDToken] = useState(
-    localStorage.getItem("dToken") ? localStorage.getItem("dToken") : " "
-  );
+  // const [dToken, setDToken] = useState(
+  //   localStorage.getItem("dToken") ? localStorage.getItem("dToken") : " "
+  // );
+  const [dToken, setDToken] = useState(localStorage.getItem("dToken") || "");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [appointments, setAppointments] = useState([]);
   const [dashData, setDashData] = useState(false);
@@ -17,7 +18,7 @@ export const DoctorContextProvider = (props) => {
     try {
       const { data } = await axios.get(
         backendUrl + "/api/doctor/appointments",
-        { headers: { dToken } }
+        { headers: { dToken } },
       );
       if (data.success) {
         setAppointments(data.appointments);
@@ -34,7 +35,7 @@ export const DoctorContextProvider = (props) => {
       const { data } = await axios.post(
         backendUrl + "/api/doctor/complete-appointment",
         { appointmentId },
-        { headers: { dToken } }
+        { headers: { dToken } },
       );
       if (data.success) {
         toast.success(data.message);
@@ -52,7 +53,7 @@ export const DoctorContextProvider = (props) => {
       const { data } = await axios.post(
         backendUrl + "/api/doctor/cancel-appointment",
         { appointmentId },
-        { headers: { dToken } }
+        { headers: { dToken } },
       );
       if (data.success) {
         toast.success(data.message);

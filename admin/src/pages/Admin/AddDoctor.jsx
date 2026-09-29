@@ -3,6 +3,7 @@ import { assets } from "../../assets/assets";
 import { AdminContext } from "../../context/AdminContext";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
@@ -10,7 +11,7 @@ const AddDoctor = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [experience, setExperience] = useState("1 Year");
-  const [fees, setFees] = useState();
+  const [fees, setFees] = useState("");
   const [about, setAbout] = useState("");
   const [speciality, setSpeciality] = useState("General Physician");
   const [degree, setDegree] = useState("");
@@ -18,6 +19,8 @@ const AddDoctor = () => {
   const [address2, setAddress2] = useState("");
 
   const { backendUrl, aToken } = useContext(AdminContext);
+
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -37,17 +40,21 @@ const AddDoctor = () => {
       formdata.append("degree", degree);
       formdata.append(
         "address",
-        JSON.stringify({ line1: address1, line2: address2 })
+        JSON.stringify({ line1: address1, line2: address2 }),
       );
 
       //console log form data
       formdata.forEach((value, key) => {
         console.log(`${key} :${value}`);
       });
+      // const { data } = await axios.post(backendUrl + "/api/admin/add-doctor",
+      //   formdata,
+      //   { headers: { aToken } }
+      // );
       const { data } = await axios.post(
-        "http://localhost:4000/api/admin/add-doctor",
+        backendUrl + "/api/admin/add-doctor",
         formdata,
-        { headers: { aToken } }
+        { headers: { aToken } },
       );
       if (data.success) {
         toast.success(data.message);
@@ -55,11 +62,13 @@ const AddDoctor = () => {
         setName("");
         setPassword("");
         setEmail("");
+        setExperience("");
         setAddress1("");
         setAddress2("");
         setDegree("");
         setAbout("");
         setFees("");
+        navigate("/doctor-list");
       } else {
         toast.error(data.message);
       }
@@ -122,7 +131,9 @@ const AddDoctor = () => {
                 value={password}
                 className="border rounded px-3 py-2"
                 type="password"
-                placeholder="Passsword"
+                placeholder="Password"
+                autoComplete="new-password"
+                minLength={8}
                 required
               />
             </div>

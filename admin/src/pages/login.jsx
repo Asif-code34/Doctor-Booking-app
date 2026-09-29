@@ -20,10 +20,19 @@ const Login = () => {
           email,
           password,
         });
+        // if (data.success) {
+        //   localStorage.setItem("aToken", data.token);
+        //   setAToken(data.token);
+        //   toast.success("Login Successfull");
+        // }
         if (data.success) {
           localStorage.setItem("aToken", data.token);
+          localStorage.removeItem("dToken");
+
           setAToken(data.token);
-          toast.success("Login Successfull");
+          setDToken("");
+
+          toast.success("Login Successful");
         } else {
           toast.error(data.message);
         }
@@ -33,9 +42,13 @@ const Login = () => {
           password,
         });
         if (data.success) {
-          setDToken(data.token);
           localStorage.setItem("dToken", data.token);
-          toast.success("Login Successfull");
+          localStorage.removeItem("aToken");
+
+          setDToken(data.token);
+          setAToken("");
+
+          toast.success("Login Successful");
         } else {
           toast.error(data.message);
         }

@@ -51,7 +51,7 @@ const MyAppointments = () => {
       const { data } = await axios.post(
         backendUrl + "/api/user/cancel-appointment",
         { appointmentId },
-        { headers: { token } }
+        { headers: { token } },
       );
       if (data.success) {
         toast.success(data.message);
@@ -74,7 +74,7 @@ const MyAppointments = () => {
   const initPay = (order) => {
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amout: order.amount,
+      amount: order.amount,
       currency: order.currency,
       name: "Appointment Payment",
       description: "Appointment Payment",
@@ -86,7 +86,7 @@ const MyAppointments = () => {
           const { data } = await axios.post(
             backendUrl + "/api/user/verifyRazorpay",
             response,
-            { headers: { token } }
+            { headers: { token } },
           );
           if (data.success) {
             getUserAppointments();
@@ -107,7 +107,7 @@ const MyAppointments = () => {
       const { data } = await axios.post(
         backendUrl + "/api/user/payment-razorpay",
         { appointmentId },
-        { headers: { token } }
+        { headers: { token } },
       );
       if (data.success) {
         initPay(data.order);

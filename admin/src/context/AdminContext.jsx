@@ -5,9 +5,10 @@ import { toast } from "react-toastify";
 const AdminContext = createContext();
 
 const AdminContextProvider = ({ children }) => {
-  const [aToken, setAToken] = useState(
-    localStorage.getItem("aToken") ? localStorage.getItem("aToken") : " "
-  );
+  // const [aToken, setAToken] = useState(
+  //   localStorage.getItem("aToken") ? localStorage.getItem("aToken") : " "
+  // );
+  const [aToken, setAToken] = useState(localStorage.getItem("aToken") || "");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [doctors, setDoctors] = useState([]);
@@ -17,9 +18,9 @@ const AdminContextProvider = ({ children }) => {
   const getAllDoctors = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/admin/all-doctors",
+        backendUrl + "/api/admin/all-doctors",
         {},
-        { headers: { aToken } }
+        { headers: { aToken } },
       );
 
       if (data.success) {
@@ -35,9 +36,9 @@ const AdminContextProvider = ({ children }) => {
   const changeAvailability = async (docId) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:4000/api/admin/change-availability",
+        backendUrl + "/api/admin/change-availability",
         { docId },
-        { headers: { aToken } }
+        { headers: { aToken } },
       );
       if (data.success) {
         toast.success(data.message);
@@ -71,9 +72,9 @@ const AdminContextProvider = ({ children }) => {
       const { data } = await axios.post(
         backendUrl + "/api/admin/cancel-appointment",
         { appointmentId },
-        { headers: { aToken } }
+        { headers: { aToken } },
       );
-      if (data.succes) {
+      if (data.success) {
         toast.success(data.message);
         getAllAppointments();
       } else {
