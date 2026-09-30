@@ -10,13 +10,15 @@ import MyAppointments from "./pages/MyAppointments";
 import Appointment from "./pages/Appointment";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
-    <div className="mx-4 sm:mx[-10%]">
+    <div className="mx-4 sm:mx-[5%] lg:mx-[8%]">
       <ToastContainer />
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
